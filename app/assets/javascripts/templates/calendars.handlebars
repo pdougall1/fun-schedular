@@ -1,0 +1,52 @@
+<ul class="calendar">
+  <li class="title">
+    <div {{action 'previousMonth'}}><</div>
+    <div>{{formattedDay}}</div>
+    <div {{action 'nextMonth'}}>></div>
+  </li>
+  <li class="day-header">
+    <div class="small-1 medium-1 large-1 day">
+      <span>Sun</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Mon</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Tue</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Wed</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Thu</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Fri</span>
+    </div>
+    <div class="small-1 medium-1 large-1 day">
+      <span>Sat</span>
+    </div>
+  </li>
+    {{#each week in currentMonth.weeks}}
+        <li class="week">
+            {{#each day in week}}
+            <div class='day large-1 :medium-1 small-1'>{{day}}</div>
+              
+
+{{!--                 day has moment object
+                day has events array
+
+                active days array is a property on calendar controller
+
+                calendar view creates dates
+                  it will bind an active day object if there is one
+                  it will organize dates into rows of weeks
+                   --}}
+            {{/each}}
+        </li>
+    {{/each}}
+
+</ul>
+
+
+{{outlet}}
