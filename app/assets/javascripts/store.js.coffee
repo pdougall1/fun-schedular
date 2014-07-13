@@ -10,3 +10,10 @@ FunSchedular.ApplicationStore = DS.Store.extend({
 FunSchedular.ApplicationAdapter = DS.ActiveModelAdapter.extend({
 
 })
+
+# FunSchedular.EventsAdapter = DS.ActiveModelAdapter.extend
+#   find: (store, type, id) ->
+#     id = "foo" + id
+#     @_super(store, type, id)
+
+# FunSchedular.ApplicationSerializer = DS.ActiveModelSerializer.extend({})

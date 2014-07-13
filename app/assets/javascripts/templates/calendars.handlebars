@@ -1,3 +1,11 @@
+{{#each week in showWeek.weeks}}
+  {{#each day in week}}
+    {{#each event in day}}
+      {{event}}
+    {{/each}}
+  {{/each}}
+{{/each}}
+
 <ul class="calendar">
   <li class="title">
     <div {{action 'previousMonth'}}><</div>
@@ -27,21 +35,15 @@
       <span>Sat</span>
     </div>
   </li>
-    {{#each week in currentMonth.weeks}}
+    {{#each week in weeks}}
         <li class="week">
             {{#each day in week}}
-            <div class='day large-1 :medium-1 small-1'>{{day}}</div>
-              
-
-{{!--                 day has moment object
-                day has events array
-
-                active days array is a property on calendar controller
-
-                calendar view creates dates
-                  it will bind an active day object if there is one
-                  it will organize dates into rows of weeks
-                   --}}
+            <div {{action 'newEvent' day}} class='day large-1 :medium-1 small-1'>
+              {{day.ofMonth}}
+              {{#if day.today}}
+                <div>TODAY</div>
+              {{/if}}
+            </div>
             {{/each}}
         </li>
     {{/each}}

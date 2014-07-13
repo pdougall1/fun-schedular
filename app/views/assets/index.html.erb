@@ -4,6 +4,9 @@
   <title>Fun Schedular</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
+  <%= include_gon %>
+
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </head>
 <body>
   <%= javascript_include_tag "application" %>

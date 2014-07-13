@@ -2,6 +2,7 @@
 
 FunSchedular.Router.map ()->
   @resource 'calendars', { path: '/' }, ->
-  	@resource 'events', ->
-  		@route 'show'
-  		@route 'create'
+    @resource 'events', ->
+      @route 'show'
+      @route 'create'
+    @route 'login'

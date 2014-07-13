@@ -12,6 +12,7 @@ gem "active_model_serializers"
 gem "ember-rails", "~>0.14"
 gem "ember-source", "~>1.1"
 gem 'foundation-rails'
+gem 'gon'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

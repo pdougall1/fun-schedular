@@ -1,0 +1,27 @@
+<nav class="top-bar">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a {{action 'backToHome' target="view"}}>Fun Schedular</a></h1>
+    </li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li><a {{action 'logIn' target='view'}} >Log In</a></li>
+      <li class="has-dropdown">
+        <a {{action 'toggleReasonsDropdown' 'reasons' target="view"}} data-dropdown="dropdown-reasons" id='dropdown-button-reasons'>
+          Possible Dropdown:
+        </a>
+        <ul id="dropdown-reasons" class="f-dropdown" data-dropdown-content>
+          <li><a {{action "goTo" "ruby" target='view'}}>I love ruby</a></li>
+          <li><a {{action "goTo" "ember" target='view'}}>Ember will take over</a></li>
+          <li><a {{action "goTo" "data" target='view'}}>Data is AWESOME</a></li>
+        </ul>
+      </li>
+    </ul>
+
+  </section>
+</nav>
+
+

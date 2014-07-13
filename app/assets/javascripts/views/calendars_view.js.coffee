@@ -1,1 +1,0 @@
-# FunSchedular.CalendarView = Ember.View.extend()

@@ -1,0 +1,6 @@
+{{#if editing}}
+	<div>{{input value=chosenText}}</div>
+	<div {{action 'submitText'}} >SUBMIT</div>
+{{else}}
+	<div {{action 'editText'}} >{{chosenText}}</div>
+{{/if}}

@@ -1,1 +1,17 @@
-<h5>Create</h5>
+
+<div id='new-event' class='row'>
+	<div class="small-12 large-10 large-offset-1 columns">
+		{{time-selector value=beginTime date=date type="begin"}}
+		{{time-selector value=endTime date=date type='end'}}
+		{{google-places action='chooseLocation'}}
+		{{google-map latitude=latitude longitude=longitude}}
+		{{editable-text text=content.name submitText='submitEventName'}}
+		{{#if editingDate}}
+			<div >{{calendar-picker day=content.date chooseDate='chooseDate' param=day}}</div>
+		{{else}}
+			<div {{action 'editDate'}}>{{content.asEnglish}}</div>
+		{{/if}}
+		<button {{action 'createEvent'}}>SUBMIT</button>
+	</div>
+
+</div>
