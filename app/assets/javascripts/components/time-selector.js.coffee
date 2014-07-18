@@ -1,7 +1,7 @@
 FunSchedular.TimeSelectorComponent = Ember.Select.extend
 
   content: (->
-    date = @get('date') || moment()
+    date = moment(@get('date')) || moment()
     date.set('hour', 0)
     date.set('minute', 0)
     date.set('second', 0)
@@ -17,8 +17,3 @@ FunSchedular.TimeSelectorComponent = Ember.Select.extend
 
   change:->
     @get('controller').send("changedTime", @get('value'), @get('type'))
-
-  # actions:
-  #   change:->
-  #     console.log "CHANGED"
-      # debugger

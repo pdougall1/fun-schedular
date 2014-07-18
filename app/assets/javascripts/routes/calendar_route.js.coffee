@@ -6,17 +6,22 @@ FunSchedular.CalendarsRoute = Ember.Route.extend
   model: (params) ->
     # refires upon query param changes via `queryParamsDidChange` action
     # params has format of { queryParamName: "someValueOrJustNull" }, which we can just forward to the server
-    events = @store.findQuery('event', params)
-    FunSchedular.Month.create(params).setEvents(events) 
+    @set('params', params)
+    @store.findQuery('event', params)
+
+  setupController: (controller, model) ->
+    controller.set('model', model)
+    calendar = FunSchedular.Month.create(@get('params')).setEvents(model) 
+    controller.set('calendar', calendar)
 
   buildNewMonthState: (self, month) ->
     self.set('controller.content.guideDate', moment(month)) #set month guide date to build new month
 
     params = {currentMonth: moment(month).format("YYYY-MM") }
-    self.transitionTo('events', {queryParams: params})
+    self.transitionTo('calendars', {queryParams: params})
 
     events = self.store.findQuery('event', params)
-    self.get('controller.content').setEvents(events) # set events in the new month
+    self.get('controller.calendar').setEvents(events) # set events in the new month
 
   actions:
     previousMonth: ->
@@ -28,5 +33,8 @@ FunSchedular.CalendarsRoute = Ember.Route.extend
       @get('buildNewMonthState')(@, nextMonth)
 
     newEvent: (day) ->
-      @transitionTo('events.create')
-      @get('controller.createCont').set('content.date', day.get('moment').toDate())
+      params = { eventDate: day.get('moment').format('YYYY-MM-DD') }
+      @transitionTo('events.create', { queryParams: params })
+
+
+

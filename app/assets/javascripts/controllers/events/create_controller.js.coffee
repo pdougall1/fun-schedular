@@ -1,17 +1,22 @@
 FunSchedular.EventsCreateController = Ember.ObjectController.extend
 
-  editingDate: (->
-    !@get('time')
-  ).property()
+  queryParams: ['eventDate']
 
-  editingDate: (->
-    !@get('time')
-  ).property()
+  eventDate: null
 
-  editingName: (->
-    !@get('name')
-  ).property()
 
-  editingLocation: (->
-    !@get('location')
-  ).property()
+#   editingDate: (->
+#     !@get('time')
+#   ).property()
+
+#   editingDate: (->
+#     !@get('time')
+#   ).property()
+
+#   editingName: (->
+#     !@get('name')
+#   ).property()
+
+#   editingLocation: (->
+#     !@get('location')
+#   ).property()

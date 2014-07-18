@@ -1,17 +1,43 @@
 
-<div id='new-event' class='row'>
-	<div class="small-12 large-10 large-offset-1 columns">
-		{{time-selector value=beginTime date=date type="begin"}}
-		{{time-selector value=endTime date=date type='end'}}
-		{{google-places action='chooseLocation'}}
-		{{google-map latitude=latitude longitude=longitude}}
-		{{editable-text text=content.name submitText='submitEventName'}}
-		{{#if editingDate}}
-			<div >{{calendar-picker day=content.date chooseDate='chooseDate' param=day}}</div>
-		{{else}}
-			<div {{action 'editDate'}}>{{content.asEnglish}}</div>
-		{{/if}}
-		<button {{action 'createEvent'}}>SUBMIT</button>
-	</div>
+<div id="cube-wrapper" >
+  <section id="options">
+    <p id="show-buttons">
+      <button {{action "showBottom"}}>Show 1</button>
+      <button {{action "showFront"}}>Show 2</button>
+      <button {{action "showTop"}}>Show 3</button>
+      <button {{action "showBack"}}>Show 4</button>
+      <button {{action 'createEvent'}}>SUBMIT</button>
+    </p>
+  </section>
 
+  <ul>
+    <li class="container">
+      <div id="cube" class="show-bottom">
+
+        <figure class="bottom">
+          {{input value=content.name}}
+          {{content.name}}
+        </figure>
+
+        <figure class="front">
+          {{time-selector value=beginTime date=date type="begin"}}
+          {{time-selector value=endTime date=date type='end'}}
+        </figure>
+
+        <figure class="top">
+          {{content.date}}
+          {{calendar-picker day=content.moment chooseDate='chooseDate' param=day}}
+        </figure>
+
+        <figure class="back">
+          {{google-places action='chooseLocation'}}
+          {{google-map latitude=latitude longitude=longitude}}
+        </figure>
+
+      </div>
+    </li>
+  </ul>
 </div>
+
+<div class='overlay' {{action "cancelNewEvent" }}></div>
+

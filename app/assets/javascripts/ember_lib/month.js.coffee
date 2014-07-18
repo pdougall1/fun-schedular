@@ -1,5 +1,7 @@
 FunSchedular.Month = Ember.Object.extend
 
+  # need to pass in { currentMonth: YYYY-MM }
+
   init: ->
     @set('guideDate', moment(@get('currentMonth'), "YYYY-MM-DD"))
     @get('weeks')
@@ -71,17 +73,23 @@ FunSchedular.Month = Ember.Object.extend
     weeks
   ).property('fullMonth')
 
+  addEventsToDays: (->
+    events = @get('events')
+    daysWithEvents = @get('daysInMonth').map (day) ->
+      events.forEach (e) -> 
+        day.pushObject e if moment(e.get('moment')).format('YYYY-MM-DD') == day.get('moment').format('YYYY-MM-DD') # add event to day Array if it is on that day
+      day
+
+    @set('daysInMonth', daysWithEvents)
+  ).observes('events')
+
+  events: []
+
 
   ########### INTERFACE ###########
 
   setEvents: (events) ->
-    daysWithEvents = @get('daysInMonth').map (day) ->
-      # console.log moment(day.get('moment')).format('YYYY-MM-DD')
-      dayEvents = events.forEach (e) -> 
-        console.log "EVENT : #{e}"
-        day.addObject e if e.get('moment') == day.get('moment') # add event to day Array if it is on that day
-
-    @set('daysInMonth', daysWithEvents)
+    @set('events', events)
     return @ #return self to chaing methods
 
 

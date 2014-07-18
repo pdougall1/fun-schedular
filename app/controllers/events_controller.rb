@@ -15,15 +15,15 @@ class EventsController < ApplicationController
     render json: { events: @events }
   end
 
-  def show
-    debugger
-    puts 'dougs'  
-  end
+  # def show
+  #   debugger
+  #   puts 'dougs'  
+  # end
 
-  def destroy
-    debugger
-    puts 'dougs'  
-  end
+  # def destroy
+  #   debugger
+  #   puts 'dougs'  
+  # end
 
  private
 

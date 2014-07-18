@@ -2,7 +2,7 @@
     <ul class="calendar">
         <li class="title">
             <div {{action 'previousMonth'}}><</div>
-            <div>{{formattedDay}}</div>
+            <div>{{formattedMonth}}</div>
             <div {{action 'nextMonth'}}>></div>
         </li>
         <li class="day-header">
@@ -31,11 +31,8 @@
         {{#each week in weeks}}
             <li class="week">
                 {{#each day in week}}
-                    <div {{action 'chooseDate' day}} {{bind-attr class=":day :large-1 :medium-1 :small-1 day.today day.inMonth day.valence day.chosen"}}>
+                    <div {{action 'chooseDate' day}} {{bind-attr class=":day :large-1 :medium-1 :small-1 day.today day.inMonth day.chosen"}}>
                         {{day.formattedDay}}
-                        {{#each event in day}}
-                            {{event}}
-                        {{/each}}
                     </div>
                 {{/each}}
             </li>

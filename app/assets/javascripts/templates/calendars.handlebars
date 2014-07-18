@@ -1,54 +1,53 @@
-{{#each week in showWeek.weeks}}
-  {{#each day in week}}
-    {{#each event in day}}
-      {{event}}
-    {{/each}}
-  {{/each}}
-{{/each}}
+<div class='main-calendar'>
+  <ul class="calendar">
+    <li class="title">
+      <div {{action 'previousMonth'}}><</div>
+      <div>{{formattedDay}}</div>
+      <div {{action 'nextMonth'}}>></div>
+    </li>
+    <li class="day-header">
+      <div class="small-1 medium-1 large-1 day">
+        <span>Sun</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Mon</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Tue</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Wed</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Thu</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Fri</span>
+      </div>
+      <div class="small-1 medium-1 large-1 day">
+        <span>Sat</span>
+      </div>
+    </li>
+      {{#each week in calendar.weeks}}
+          <li class="week">
+              {{#each day in week}}
+              <div {{action 'newEvent' day}} class='day large-1 :medium-1 small-1'>
+                {{day.ofMonth}}
+                <ul>
+                  {{#each event in day}}
+                    <li>{{event.name}}</li>
+                  {{/each}}
+                  </ul>
+                {{#if day.today}}
+                  <div>TODAY</div>
+                {{/if}}
+              </div>
+              {{/each}}
+          </li>
+      {{/each}}
 
-<ul class="calendar">
-  <li class="title">
-    <div {{action 'previousMonth'}}><</div>
-    <div>{{formattedDay}}</div>
-    <div {{action 'nextMonth'}}>></div>
-  </li>
-  <li class="day-header">
-    <div class="small-1 medium-1 large-1 day">
-      <span>Sun</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Mon</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Tue</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Wed</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Thu</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Fri</span>
-    </div>
-    <div class="small-1 medium-1 large-1 day">
-      <span>Sat</span>
-    </div>
-  </li>
-    {{#each week in weeks}}
-        <li class="week">
-            {{#each day in week}}
-            <div {{action 'newEvent' day}} class='day large-1 :medium-1 small-1'>
-              {{day.ofMonth}}
-              {{#if day.today}}
-                <div>TODAY</div>
-              {{/if}}
-            </div>
-            {{/each}}
-        </li>
-    {{/each}}
-
-</ul>
+  </ul>
+</div>
 
 
 {{outlet}}

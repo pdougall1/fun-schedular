@@ -7,6 +7,7 @@ FunSchedular.Day = Ember.ArrayProxy.extend
       date = moment(@get('date'))
     @set('today', true) if moment(date).format("YYYY-MM-DD") == moment().format("YYYY-MM-DD")
     @set('moment', date)
+    @set('content', Ember.A([]))
 
   ofMonth: (->
     m = moment(@get('moment'))
@@ -17,12 +18,11 @@ FunSchedular.Day = Ember.ArrayProxy.extend
   events: []
   month: 'current'
 
-  # formatted: (->
-  #   moment(@get('date')).format("YYYY-MM-DD")
-  # ).property('date')
+  formatted: (->
+    moment(@get('moment')).format("YYYY-MM-DD")
+  ).property('date')
 
-  # date: (->
-  #   moment(@get('date')).toDate()
-  # ).property()
-
+  formattedDay: (->
+    moment(@get('moment')).format("D")
+  ).property('date')
 

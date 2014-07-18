@@ -1,8 +1,13 @@
 FunSchedular.CalendarPickerComponent = Ember.Component.extend
 
   guideDate: (->
-    moment()
+    day = @get('eventDay') || @get('day')
+    moment(day)
   ).property()
+
+  chosenDay: (->
+    moment(@get('day'))
+  ).property('day')
 
   daysInMonth: ( -> # day can be a string or a date object
     day = @get('guideDate')
@@ -12,11 +17,15 @@ FunSchedular.CalendarPickerComponent = Ember.Component.extend
     while date.getMonth() == month # if that date is in the right month
       day = FunSchedular.Day.create({ date: date })
       day.set('inMonth', true)
+      # console.log "CHOSEN :   #{moment(this.get('chosenDay')).format('YYYY-MM-DD')}"
+      # console.log "DATE : #{moment(date).format('YYYY-MM-DD')}"
+      # debugger if moment(this.get('chosenDay')).format('YYYY-MM-DD') == moment(date).format('YYYY-MM-DD')
+      day.set('chosen', true) if moment(this.get('chosenDay')).format('YYYY-MM-DD') == moment(date).format('YYYY-MM-DD')
       days.push day
       date.setDate(date.getDate() + 1) # then advance the loop
 
     days
-  ).property('guideDate')
+  ).property('day.moment', 'guideDate')
 
   fullMonth: (->
     daysInMonth = @get('daysInMonth')
@@ -66,7 +75,11 @@ FunSchedular.CalendarPickerComponent = Ember.Component.extend
 
 
   formattedDay: (->
-    @get('guideDate').format('D, MMM YYYY')
+    moment(@get('chosenDay')).format('D, MMM YYYY')
+  ).property('chosenDay', 'guideDate')
+
+  formattedMonth: (->
+    moment(@get('guideDate')).format('MMMM')
   ).property('guideDate')
 
   didInsertElement: ->
@@ -75,7 +88,6 @@ FunSchedular.CalendarPickerComponent = Ember.Component.extend
   actions:
     chooseDate: (day) ->
       @sendAction('chooseDate', day)
-      @set('guideDate', moment(day))
 
     previousMonth: ->
       day = moment(@get('guideDate')).subtract('month', 1)

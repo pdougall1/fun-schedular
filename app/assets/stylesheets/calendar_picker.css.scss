@@ -2,14 +2,12 @@
 
 #calendar-picker {
 
-
-
 	/* Responsive Calendar for Foundation */
 	.calendar { 
 	    margin-left: 0;
 	    margin-bottom: 1.25rem;
 	    padding-bottom: 1px;
-	    border-bottom: 2px solid $primary-color;
+	    // border-bottom: 2px solid $primary-color;
 	}
 	    .calendar * {
 	        list-style: none;
@@ -18,7 +16,7 @@
 	    .calendar .title { 
 	        text-align: center; 
 	        font-size: 1.6875rem; 
-	        background-color: $primary-color;
+	        // background-color: $primary-color;
 	        color: white;
 	        width:100%;
 	        &:after {
@@ -53,23 +51,19 @@
 	  width: 100%;
 	  min-height: 3rem;
 	  float: left;
-	  border: 2px solid $body-bg;
+	  // border: 2px solid rgba(0, 0, 0, 0)
 	}
 	.calendar .day-header {
-	    background-color: $primary-color; 
+	    // background-color: $primary-color; 
 	}
 	.calendar .day-header .day,
 	.calendar .day-header .days { 
-	    background-color: $primary-color; 
+	    // background-color: $primary-color; 
 	    color: white;
 	    text-align: center;
 	    min-height: 0.5rem;
 	    display: none;
 	    border: 0;
-	}
-
-	.day:hover, .days:hover {
-	    background: $tertiary-light;
 	}
 
 	.day.previous-month,
@@ -155,39 +149,35 @@
 	    }
 	}
 
-	/*#beginning-date {
-	    width: 400px;
-	    height: 200px;
-	}
-	*/
 	.date-picker {
 	    width: 400px;
 	}
 
 	.in-month {
-	    background-color: $tertiary-light;
+	    background-color: $tertiary;
+	    border-radius: 50%;
 	    &:hover {
-	        background-color: $yellow-highlight;
+	        background-color: lighten( $tertiary, 20% )
 	    }
 	}
 
 	.today {
-	    border: 6px solid $alt-primary-color !important;
+	    border: 3px solid $primary-color !important;
 	}
 
 	.chosen {
-	    border: 6px solid $blue-highlight !important;   
+	    background-color: lighten( $tertiary, 20% )
 	}
 
-	.valence-1 { background: lighten( $tertiary-dark, 65% );}
-	.valence-2 { background: lighten( $tertiary-dark, 55% );}
-	.valence-3 { background: lighten( $tertiary-dark, 50% );}
-	.valence-4 { background: lighten( $tertiary-dark, 45% );}
-	.valence-5 { background: lighten( $tertiary-dark, 40% );}
-	.valence-6 { background: lighten( $tertiary-dark, 30% );}
-	.valence-7 { background: lighten( $tertiary-dark, 20% );}
-	.valence-8 { background: lighten( $tertiary-dark, 10% );}
-	.valence-9 { background: lighten( $tertiary-dark, 0% );}
+	// .valence-1 { background: lighten( $tertiary-dark, 65% );}
+	// .valence-2 { background: lighten( $tertiary-dark, 55% );}
+	// .valence-3 { background: lighten( $tertiary-dark, 50% );}
+	// .valence-4 { background: lighten( $tertiary-dark, 45% );}
+	// .valence-5 { background: lighten( $tertiary-dark, 40% );}
+	// .valence-6 { background: lighten( $tertiary-dark, 30% );}
+	// .valence-7 { background: lighten( $tertiary-dark, 20% );}
+	// .valence-8 { background: lighten( $tertiary-dark, 10% );}
+	// .valence-9 { background: lighten( $tertiary-dark, 0% );}
 	// .valence-10 { background: lighten( $tertiary-color, 100% );}
 
 
