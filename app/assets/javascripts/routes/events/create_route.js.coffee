@@ -30,12 +30,14 @@ FunSchedular.EventsCreateRoute = Ember.Route.extend
     cancelNewEvent: ->
       @get('controller.model').deleteRecord()
       @get('unblur')('.main-calendar')
-      @transitionTo('/')
+      @transitionTo('calendars')
 
     createEvent: ->
-      @get('controller.model').save()
+      event = @get('controller.model')
+      event.save()
       @get('unblur')('.main-calendar')
-      @transitionTo('/')
+      params = { currentMonth: moment(event.get('moment')).format('YYYY-MM') }
+      @transitionTo('calendars', { queryParams: params } )
 
     showTop: ->
       $("#cube").removeClass().addClass('show-top')
