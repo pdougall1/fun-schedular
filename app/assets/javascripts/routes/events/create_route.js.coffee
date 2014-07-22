@@ -4,13 +4,13 @@ FunSchedular.EventsCreateRoute = Ember.Route.extend
 
     @store.createRecord('event', { date: params.eventDate })
 
-  unblur: (selector) ->
-    $(selector).css
-      'filter'         : 'blur(0px)',
-      '-webkit-filter' : 'blur(0px)',
-      '-moz-filter'    : 'blur(0px)',
-      '-o-filter'      : 'blur(0px)',
-      '-ms-filter'     : 'blur(0px)'
+  # unblur: (selector) ->
+  #   $(selector).css
+  #     'filter'         : 'blur(0px)',
+  #     '-webkit-filter' : 'blur(0px)',
+  #     '-moz-filter'    : 'blur(0px)',
+  #     '-o-filter'      : 'blur(0px)',
+  #     '-ms-filter'     : 'blur(0px)'
 
   actions:
     chooseDate: (day) ->
@@ -29,13 +29,14 @@ FunSchedular.EventsCreateRoute = Ember.Route.extend
 
     cancelNewEvent: ->
       @get('controller.model').deleteRecord()
-      @get('unblur')('.main-calendar')
+      # @get('unblur')('.main-calendar')
       @transitionTo('calendars')
 
     createEvent: ->
       event = @get('controller.model')
       event.save()
-      @get('unblur')('.main-calendar')
+      @get('controller.controllers.calendars.calendar').addEvent(event)
+      # @get('unblur')('.main-calendar')
       params = { currentMonth: moment(event.get('moment')).format('YYYY-MM') }
       @transitionTo('calendars', { queryParams: params } )
 

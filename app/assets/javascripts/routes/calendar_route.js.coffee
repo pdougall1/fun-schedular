@@ -9,11 +9,6 @@ FunSchedular.CalendarsRoute = Ember.Route.extend
     @set('params', params)
     @store.findQuery('event', params)
 
-  setupController: (controller, model) ->
-    controller.set('model', model)
-    calendar = FunSchedular.Month.create(@get('params')).setEvents(model) 
-    controller.set('calendar', calendar)
-
   buildNewMonthState: (self, month) ->
     self.set('controller.content.guideDate', moment(month)) #set month guide date to build new month
 
@@ -22,6 +17,9 @@ FunSchedular.CalendarsRoute = Ember.Route.extend
 
     events = self.store.findQuery('event', params)
     self.get('controller.calendar').setEvents(events) # set events in the new month
+    self.get('view')
+    height = (parseInt($('body').css('height')) - 135) / $('.week').length
+    $('.main-calendar .calendar .day').css('height', height)
 
   actions:
     previousMonth: ->

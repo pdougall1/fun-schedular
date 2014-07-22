@@ -1,5 +1,8 @@
 @import 'foundation_and_overrides';
 .main-calendar {
+    height: 100%;
+
+
     /* Responsive Calendar for Foundation */
     .calendar { 
         margin-left: 0;
@@ -47,25 +50,14 @@
       position: relative;
       padding: 0.3rem 0.39375rem;
       width: 100%;
-      min-height: 6rem;
+      // min-height: 6rem;
       float: left;
-      border: 2px solid green;
-    }
-    .calendar .day-header {
-        background-color: $primary-color; 
-    }
-    .calendar .day-header .day,
-    .calendar .day-header .days { 
-        background-color: $primary-color; 
-        color: white;
-        text-align: center;
-        min-height: 0.5rem;
-        display: none;
-        border: 0;
+      border: 1px solid lighten( $tertiary, 30% );
+      font-size: 12px;
     }
 
     .day:hover, .days:hover {
-        background: $tertiary-light;
+        // background: $tertiary-light;
     }
 
     .day.previous-month,
@@ -76,14 +68,6 @@
         color: #222222;
         display: none;
     }
-
-    // .day.today, .days.today {
-    //     /*this should actually be indicated by a symbol instead*/
-    //     background: $secondary-dark;
-    // }
-    // .day.today:hover, .days.today:hover {
-    //     background: darken( $secondary-dark, 10% );
-    // }
 
     @media only screen {
         .calendar .small-1 {

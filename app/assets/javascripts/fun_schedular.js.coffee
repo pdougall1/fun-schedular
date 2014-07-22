@@ -12,3 +12,9 @@
 #= require ./router
 #= require_self
 
+
+# set up cross site request forgery protection on ajax calls
+$ ->
+  token = $('meta[name="csrf-token"]').attr('content')
+  $.ajaxPrefilter (options, originalOptions, xhr) ->
+    xhr.setRequestHeader('X-CSRF-Token', token)

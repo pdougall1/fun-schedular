@@ -4,10 +4,16 @@
   z-index: 200;
 }
 
+#sidebar {
+  float: left;
+  width: 15%;
+  height: 100%;
+  background-color: pink;
+}
+
 #calendar {
-  width: 90%;  
-  margin-left: auto;
-  margin-right: auto;
+  float: left;
+  width: 83%;
 }
 
 #new-event {
@@ -46,6 +52,60 @@
   margin-left: -250px;
 }
 
-// .cube-wrapper-wrapper {
-//   width: 100%
-// }
+
+.day-header {
+  .day {
+    height: 20px !important;
+    border: none !important;
+    font-size: 12px;
+  }
+}
+
+ul.buttons {
+  list-style-type: none;
+  li { 
+    text-align: center;
+    width: 50px; 
+    float: left;
+    color: $tertiary-dark;
+    &:last-of-type {
+      width: 150px;
+    }
+  }
+  li.inline-button {
+    border: 1px solid $tertiary-light;
+    background-color: lighten( $tertiary, 30% );
+    &:hover {
+      background-color: lighten( $tertiary, 15% );
+    }
+  } 
+}
+
+.week {
+  .event {
+    font-size: 14px;
+  }
+}
+
+.clear-row {
+  width: 100%;
+  height: 40px;
+}
+
+#login-form {
+  z-index: 100;
+  background-color: white;
+  position: fixed;
+  right: 168px;
+  top: $topbar-height;;
+  width: 300px;
+  height: 150px;
+  -webkit-box-shadow: 0px 0px 30px 5px $tertiary;
+  -moz-box-shadow: 0px 0px 30px 5px $tertiary;
+  box-shadow: 0px 0px 30px 5px $tertiary;
+}
+
+.error {
+  color: white; 
+  margin-right: 200px;
+}

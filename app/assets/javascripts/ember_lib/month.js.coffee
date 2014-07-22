@@ -74,23 +74,30 @@ FunSchedular.Month = Ember.Object.extend
   ).property('fullMonth')
 
   addEventsToDays: (->
-    events = @get('events')
+    console.log "CALLED"
+    events = @get('allEvents')
     daysWithEvents = @get('daysInMonth').map (day) ->
       events.forEach (e) -> 
         day.pushObject e if moment(e.get('moment')).format('YYYY-MM-DD') == day.get('moment').format('YYYY-MM-DD') # add event to day Array if it is on that day
       day
 
     @set('daysInMonth', daysWithEvents)
-  ).observes('events')
+  ).observes('allEvents.length')
 
-  events: []
+  allEvents: []
 
 
   ########### INTERFACE ###########
 
   setEvents: (events) ->
-    @set('events', events)
+    @set('allEvents', events)
     return @ #return self to chaing methods
 
+  addEvent: (event) ->
+    newEvents = @get('allEvents')
+    newEvents.pushObject(event)
+    console.log "ADDED"
+    @set('allEvents', newEvents)
+    return @ #return self to chaing methods
 
 

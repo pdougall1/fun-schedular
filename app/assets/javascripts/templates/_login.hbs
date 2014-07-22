@@ -1,0 +1,13 @@
+<div id='login-form'>
+  <form {{action 'login' on='submit'}} >
+
+    {{#if view.signupIsShowing}}
+      <div>Other signup fields</div>
+    {{/if}}
+
+    {{input value=email}}
+    {{input value=password type="password"}}
+    <p {{action 'showSignup' target='view'}}>Sign Up</p>
+    {{input type="submit" value="Log In"}}
+  </form>
+</div>

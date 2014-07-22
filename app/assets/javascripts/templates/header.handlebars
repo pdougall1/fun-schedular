@@ -8,7 +8,13 @@
   <section class="top-bar-section">
     <!-- Right Nav Section -->
     <ul class="right">
-      <li><a {{action 'logIn' target='view'}} >Log In</a></li>
+      {{#if currentUser}}
+        <li class='error'>{{currentUser.firstName}}</li>
+        <li><a {{action 'logout'}}>Log Out</a></li>
+      {{else}}
+        <li class='error'>{{errors}}</li>
+        <li><a {{action 'showLogin' target='view'}} >Log In</a></li>
+      {{/if}}
       <li class="has-dropdown">
         <a {{action 'toggleReasonsDropdown' 'reasons' target="view"}} data-dropdown="dropdown-reasons" id='dropdown-button-reasons'>
           Possible Dropdown:
@@ -24,4 +30,6 @@
   </section>
 </nav>
 
-
+{{#if view.loginIsShowing}}
+  {{partial 'login'}}
+{{/if}}

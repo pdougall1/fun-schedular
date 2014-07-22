@@ -11,3 +11,11 @@ FunSchedular.CalendarsController = Ember.ArrayController.extend
     @get('content')
   ).property()
 
+  calendar: (->
+  	params = { currentMonth: @get('currentMonth') }
+  	FunSchedular.Month.create(params).setEvents(@get('model')) 
+  ).property('model.length')
+
+  currentMonthFormatted: (->
+    moment(@get('currentMonth'), 'YYYY-MM').format('MMMM YYYY')
+  ).property('currentMonth')

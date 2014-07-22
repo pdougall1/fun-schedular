@@ -5,4 +5,3 @@ FunSchedular.Router.map ()->
     @resource 'events', ->
       @route 'show'
       @route 'create'
-    @route 'login'

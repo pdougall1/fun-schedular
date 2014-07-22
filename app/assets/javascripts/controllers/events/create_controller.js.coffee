@@ -1,4 +1,5 @@
 FunSchedular.EventsCreateController = Ember.ObjectController.extend
+  needs: ["calendars"]    
 
   queryParams: ['eventDate']
 
