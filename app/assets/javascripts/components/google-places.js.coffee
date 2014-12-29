@@ -7,16 +7,12 @@ FunSchedular.GooglePlacesComponent = Ember.TextField.extend
 
     callback = -> 
       googlePlace = autocomplete.getPlace()
-      self.get('placeChange')(googlePlace, self)
-      # place = FunSchedular.Place.create({googlePlace : autocomplete.getPlace()})
+      self.placeChange(googlePlace, self)
       
     google.maps.event.addListener(autocomplete, 'place_changed',  -> callback())
   ).on('didInsertElement')
 
 
   placeChange: (googlePlace, self) ->
-    latLng = {
-      lat : googlePlace.geometry.location.k
-      lng : googlePlace.geometry.location.B
-    }
-    self.sendAction('action', latLng)
+    console.log(googlePlace)
+    self.sendAction('action', googlePlace)

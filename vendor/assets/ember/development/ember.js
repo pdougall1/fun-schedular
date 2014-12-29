@@ -1,5 +1,5 @@
 // Fetched from channel: beta, with url http://builds.emberjs.com/beta/ember.js
-// Fetched on: 2014-07-13T17:25:51Z
+// Fetched on: 2014-07-22T22:52:25Z
 /*!
  * @overview  Ember - JavaScript Application Framework
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors
@@ -7,7 +7,7 @@
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   1.7.0-beta.2+pre.7bfd70df
+ * @version   1.7.0-beta.2
  */
 
 (function() {
@@ -9443,11 +9443,11 @@ define("ember-handlebars/helpers/view",
       Ember.assert("The view helper only takes a single argument", arguments.length <= 2);
 
       // If no path is provided, treat path param as options
-      // and get an instance of the registered `view:default`
+      // and get an instance of the registered `view:toplevel`
       if (path && path.data && path.data.isRenderData) {
         options = path;
         Ember.assert('{{view}} helper requires parent view to have a container but none was found. This usually happens when you are manually-managing views.', !!options.data.view.container);
-        path = options.data.view.container.lookupFactory('view:default');
+        path = options.data.view.container.lookupFactory('view:toplevel');
       }
 
       options.helperName = options.helperName || 'view';
@@ -10537,19 +10537,20 @@ define("ember-metal",
     __exports__["default"] = Ember;
   });
 define("ember-metal/alias",
-  ["ember-metal/property_get","ember-metal/property_set","ember-metal/error","ember-metal/properties","ember-metal/platform","ember-metal/utils","ember-metal/dependent_keys","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+  ["ember-metal/property_get","ember-metal/property_set","ember-metal/error","ember-metal/properties","ember-metal/computed","ember-metal/platform","ember-metal/utils","ember-metal/dependent_keys","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
     var get = __dependency1__.get;
     var set = __dependency2__.set;
     var EmberError = __dependency3__["default"];
     var Descriptor = __dependency4__.Descriptor;
     var defineProperty = __dependency4__.defineProperty;
-    var create = __dependency5__.create;
-    var meta = __dependency6__.meta;
-    var inspect = __dependency6__.inspect;
-    var addDependentKeys = __dependency7__.addDependentKeys;
-    var removeDependentKeys = __dependency7__.removeDependentKeys;
+    var ComputedProperty = __dependency5__.ComputedProperty;
+    var create = __dependency6__.create;
+    var meta = __dependency7__.meta;
+    var inspect = __dependency7__.inspect;
+    var addDependentKeys = __dependency8__.addDependentKeys;
+    var removeDependentKeys = __dependency8__.removeDependentKeys;
 
     function alias(altKey) {
       return new AliasedProperty(altKey);
@@ -10610,6 +10611,10 @@ define("ember-metal/alias",
       defineProperty(obj, keyName, null);
       return set(obj, keyName, value);
     }
+
+    // Backwards compatibility with Ember Data
+    AliasedProperty.prototype._meta = undefined;
+    AliasedProperty.prototype.meta = ComputedProperty.prototype.meta;
   });
 define("ember-metal/array",
   ["exports"],
@@ -12818,7 +12823,7 @@ define("ember-metal/core",
 
       @class Ember
       @static
-      @version 1.7.0-beta.2+pre.7bfd70df
+      @version 1.7.0-beta.2
     */
 
     if ('undefined' === typeof Ember) {
@@ -12845,10 +12850,10 @@ define("ember-metal/core",
     /**
       @property VERSION
       @type String
-      @default '1.7.0-beta.2+pre.7bfd70df'
+      @default '1.7.0-beta.2'
       @static
     */
-    Ember.VERSION = '1.7.0-beta.2+pre.7bfd70df';
+    Ember.VERSION = '1.7.0-beta.2';
 
     /**
       Standard environmental variables. You can define these in a global `EmberENV`
@@ -21884,11 +21889,7 @@ define("ember-routing/system/dsl",
           options.path = "/" + name;
         }
 
-        var createSubRoutes = false;
-        
-          createSubRoutes = true;
-        
-        if (createSubRoutes) {
+        if (callback) {
           var dsl = new DSL(name);
           route(dsl, 'loading');
           route(dsl, 'error', { path: "/_unused_dummy_error_path_route_" + name + "/:error" });
@@ -24261,7 +24262,7 @@ define("ember-routing/system/router",
         var location = get(this, 'location');
         var rootURL = get(this, 'rootURL');
 
-        if (rootURL && !this.container.has('-location-setting:root-url')) {
+        if (rootURL && this.container && !this.container.has('-location-setting:root-url')) {
           this.container.register('-location-setting:root-url', rootURL, { instantiate: false });
         }
 
@@ -24583,16 +24584,7 @@ define("ember-routing/system/router",
           return;
         }
 
-        var errorArgs = ['Error while processing route: ' + transition.targetName];
-
-        if (error) {
-          if (error.message) { errorArgs.push(error.message); }
-          if (error.stack)   { errorArgs.push(error.stack); }
-
-          if (typeof error === "string") { errorArgs.push(error); }
-        }
-
-        Ember.Logger.error.apply(this, errorArgs);
+        logError(error, 'Error while processing route: ' + transition.targetName);
       },
 
       loading: function(transition, originRoute) {
@@ -24622,6 +24614,21 @@ define("ember-routing/system/router",
         }
       }
     };
+
+    function logError(error, initialMessage) {
+      var errorArgs = [];
+
+      if (initialMessage) { errorArgs.push(initialMessage); }
+
+      if (error) {
+        if (error.message) { errorArgs.push(error.message); }
+        if (error.stack)   { errorArgs.push(error.stack); }
+
+        if (typeof error === "string") { errorArgs.push(error); }
+      }
+
+      Ember.Logger.error.apply(this, errorArgs);
+    }
 
     function findChildRouteName(parentRoute, originatingChildRoute, name) {
       var router = parentRoute.router;
@@ -24795,7 +24802,7 @@ define("ember-routing/system/router",
         } else if (error.name === 'TransitionAborted') {
           // just ignore TransitionAborted here
         } else {
-          throw error;
+          logError(error);
         }
 
         return error;
@@ -35370,6 +35377,7 @@ define("ember-testing/helpers",
 
     function triggerEvent(app, selector, context, type, options){
       if (arguments.length === 3) {
+        options = type;
         type = context;
         context = null;
       }
@@ -35663,7 +35671,7 @@ define("ember-testing/helpers",
     helper('currentURL', currentURL);
 
     /**
-      Triggers the given event on the element identified by the provided selector.
+      Triggers the given DOM event on the element identified by the provided selector.
 
       Example:
 
@@ -35679,8 +35687,10 @@ define("ember-testing/helpers",
 
      @method triggerEvent
      @param {String} selector jQuery selector for finding element on the DOM
+     @param {String} [context] jQuery selector that will limit the selector
+                               argument to find only within the context's children
      @param {String} type The event type to be triggered.
-     @param {String} options The options to be passed to jQuery.Event.
+     @param {Object} options The options to be passed to jQuery.Event.
      @return {RSVP.Promise}
      @since 1.5.0
     */

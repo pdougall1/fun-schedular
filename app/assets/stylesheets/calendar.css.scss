@@ -54,6 +54,7 @@
       float: left;
       border: 1px solid lighten( $tertiary, 30% );
       font-size: 12px;
+      overflow:auto;
     }
 
     .day:hover, .days:hover {

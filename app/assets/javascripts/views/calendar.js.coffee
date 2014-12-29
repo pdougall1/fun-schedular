@@ -9,6 +9,10 @@ FunSchedular.CalendarsView = Ember.View.extend
   ).observes('controller.model.length')
 
   didInsertElement: ->
-    height = (parseInt($('body').css('height')) - 135) / $('.week').length
+    $('body').css('overflow', 'hidden')
+    bodyHeight = parseInt($('body').css('height'))
+    height = ((bodyHeight) - 135) / $('.week').length
     $('.main-calendar .calendar .day').css('height', height)
+    $('#sidebar').css('height', bodyHeight - 45 - 80 - 23)
+    @get('controller').setAllEvents()
 

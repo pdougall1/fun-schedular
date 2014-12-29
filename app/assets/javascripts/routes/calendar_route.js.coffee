@@ -1,25 +1,15 @@
 FunSchedular.CalendarsRoute = Ember.Route.extend
 
-  queryParams: 
-    currentMonth: refreshModel: true
-
   model: (params) ->
-    # refires upon query param changes via `queryParamsDidChange` action
-    # params has format of { queryParamName: "someValueOrJustNull" }, which we can just forward to the server
-    @set('params', params)
-    @store.findQuery('event', params)
+    FunSchedular.Calendar.create()
 
   buildNewMonthState: (self, month) ->
     self.set('controller.content.guideDate', moment(month)) #set month guide date to build new month
-
     params = {currentMonth: moment(month).format("YYYY-MM") }
     self.transitionTo('calendars', {queryParams: params})
-
-    events = self.store.findQuery('event', params)
-    self.get('controller.calendar').setEvents(events) # set events in the new month
-    self.get('view')
     height = (parseInt($('body').css('height')) - 135) / $('.week').length
     $('.main-calendar .calendar .day').css('height', height)
+    self.get('controller').setAllEvents()
 
   actions:
     previousMonth: ->
@@ -34,5 +24,17 @@ FunSchedular.CalendarsRoute = Ember.Route.extend
       params = { eventDate: day.get('moment').format('YYYY-MM-DD') }
       @transitionTo('events.create', { queryParams: params })
 
+    highlightFriend: (friend) ->
+      friend.set('highlighted', true)
 
+    unHighlightFriend: (friend) ->
+      friend.set('highlighted', false)
+
+    showEvent: (event) ->
+      controller = @get('controller')
+      if e = controller.get('highlightedEvent')
+        e.set('highlighted', false)
+        
+      event.set('highlighted', true)
+      controller.set('highlightedEvent', event)
 

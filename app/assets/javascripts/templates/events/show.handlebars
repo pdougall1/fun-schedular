@@ -1,1 +1,20 @@
-<h5>Show</h5>
+<div id='show-event'>
+	<h3>{{name}}</h3>
+
+	{{google-map latitude=latitude longitude=longitude}}
+	{{date}}
+	{{beginTime}}	
+	{{endTime}}
+	<div>LOC: {{location}}</div>
+	<div>DES: {{description}}</div>
+	<ul>
+		{{#each friend in friends}}
+			<li>{{friend.name}}</li>
+		{{/each}}
+	</ul>
+
+
+
+
+	
+</div>

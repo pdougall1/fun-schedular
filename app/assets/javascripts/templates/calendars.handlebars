@@ -1,7 +1,13 @@
 
 
 <div id='sidebar'>
-  here we are
+  <div id='calendar-top-left'></div>
+  <div class='friends-list'>
+  {{#each friend in currentUser.friends}}
+    {{friend-bar friend=friend sendMouseEnter='highlightFriend' sendMouseLeave='unHighlightFriend'}}
+  {{/each}}
+  </div>
+
 </div>
 
 
@@ -12,6 +18,10 @@
         <li class="inline-button" {{action 'previousMonth'}}> < </li>
         <li class="inline-button" {{action 'nextMonth'}}> > </li>
         <li>{{currentMonthFormatted}}</li>
+        <li class='event-detail'>
+          {{highlightedEvent.name}}
+          {{link-to 'event' 'events.show' highlightedEvent}}
+        </li>
       </ul>
     </div>
 
@@ -43,16 +53,16 @@
       </li>
 
 
-        {{#each week in calendar.weeks}}
+        {{#each week in currentMonthObj.weeks}}
           <li class="week">
             {{#each day in week}}
-              <div {{action 'newEvent' day}} class='day large-1 :medium-1 small-1'>
+              <div {{!action 'newEvent' day}} class='day large-1 :medium-1 small-1'>
                 {{day.ofMonth}}
                 <ul>
-                  {{#each event in day}}
-                    <li class='event'>{{event.name}}</li>
+                  {{#each event in day.content}}
+                    <span>{{event-bar event=event action="showEvent"}}</span>
                   {{/each}}
-                  </ul>
+                </ul>
                 {{#if day.today}}
                   <div>TODAY</div>
                 {{/if}}

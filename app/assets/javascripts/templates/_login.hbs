@@ -1,13 +1,37 @@
 <div id='login-form'>
-  <form {{action 'login' on='submit'}} >
+  <form {{action 'login' view.signingUp on='submit'}} >
 
-    {{#if view.signupIsShowing}}
-      <div>Other signup fields</div>
+    {{#if loginFailed}}
+      <h3>Login has failed</h3>
     {{/if}}
 
-    {{input value=email}}
-    {{input value=password type="password"}}
-    <p {{action 'showSignup' target='view'}}>Sign Up</p>
+    {{#if view.signingUp}}
+      <div>First Name</div>
+      {{input value=fields.first_name id='first-name'}}
+      <label for='last-name'>Last Name</label>
+      {{input value=fields.last_name id='last-name'}}
+    {{/if}}
+
+    <label for='email'>Email</label>
+    {{input value=fields.email id='email'}}
+    <label for='password'>Password</label>
+    {{input value=fields.password id='password' type="password"}}
+
+    {{#if view.signingUp}}
+      <label for='password-confirmation'>Password confirmation</label>
+      {{input value=fields.password_confirmation id='password-confirmation' type="password"}}
+    {{/if}}
+
+    
+    <p {{action 'toggleSignup' target='view'}}>
+    {{#if view.signingUp}}
+  		Sign In
+  	{{else}}
+  		Sign Up
+  	{{/if}}
+    </p>
+    
+
     {{input type="submit" value="Log In"}}
   </form>
 </div>

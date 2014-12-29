@@ -1,13 +1,14 @@
 
-<div id="cube-wrapper" >
+<div id="cube-wrapper">
+
   <section id="options">
-    <p id="show-buttons">
-      <button {{action "showBottom"}}>Show 1</button>
-      <button {{action "showFront"}}>Show 2</button>
-      <button {{action "showTop"}}>Show 3</button>
-      <button {{action "showBack"}}>Show 4</button>
-      <button {{action 'createEvent'}}>SUBMIT</button>
-    </p>
+    <ul id="show-buttons">
+      {{#each button in buttons}}
+        <li>
+          {{circle-button label=button.label action=button.action completed=button.completed}}
+        </li>
+      {{/each}}
+    </ul>
   </section>
 
   <ul>
@@ -20,13 +21,13 @@
         </figure>
 
         <figure class="front">
-          {{time-selector value=beginTime date=date type="begin"}}
-          {{time-selector value=endTime date=date type='end'}}
+          <div class='time'>{{time-selector value=beginTime type="begin"}}</div>
+          <div class='date'>{{calendar-picker day=content.moment chooseDate='</div>chooseDate' param=day}}
         </figure>
 
         <figure class="top">
-          {{content.date}}
-          {{calendar-picker day=content.moment chooseDate='chooseDate' param=day}}
+          <div class='time'>{{time-selector value=endTime type="end"}}</div>
+          <div class='date'>{{calendar-picker day=content.moment chooseDate='chooseDate' param=day}}</div>
         </figure>
 
         <figure class="back">

@@ -1,0 +1,1 @@
+FunSchedular.EventsShowController = Ember.ObjectController.extend()

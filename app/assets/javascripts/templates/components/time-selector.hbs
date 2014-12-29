@@ -1,0 +1,10 @@
+<div id='time-selector'>
+	<div class='section hour'>
+		{{arrow-selector value=hour max=12 passMax='flipAmpm' belowMax='flipAmpm'}}
+	</div>
+	<div class='section colon'>:</div>
+	<div class='section minutes'>
+		{{arrow-selector value=minutes max=60 passMax='increaseHour' belowMax='decreaseHour'}}
+	</div>
+	<div class='section ampm' {{action 'flipAmpm'}} >{{ampm}}</div>
+</div>

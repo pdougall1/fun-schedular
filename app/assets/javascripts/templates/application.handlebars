@@ -1,3 +1,6 @@
 {{view FunSchedular.Header }}
-{{outlet login}}
-{{outlet}}
+{{#if userLoggedIn}}
+	{{outlet}}
+{{else}}
+	<h1 class='main-heading'>Log In Please!</h1>
+{{/if}}

@@ -1,15 +1,15 @@
 FunSchedular.Header = Ember.View.extend
   templateName: 'header'
 
-  loginIsShowing: false
+  loggingIn: false
   signupIsShowing: false
 
   loginSucceed: ->
-    @set('loginIsShowing', false)
+    @set('loggingIn', false)
     @set('signupIsShowing', false)
 
   loginFail: ->
-    # @set('loginIsShowing', false)
+    @set('loginFailed', false)
     # @set('signupIsShowing', false)
 
 
@@ -21,9 +21,15 @@ FunSchedular.Header = Ember.View.extend
     backToHome: ->
       @get('controller.target.router').transitionTo '/'
 
-    showLogin: ->
+    toggleLogin: ->
       @set('signupIsShowing', false)
-      @set('loginIsShowing', true)
+      if @get('loggingIn')
+        @set('loggingIn', false)
+      else
+        @set('loggingIn', true)
 
-    showSignup: ->
-      @set('signupIsShowing', true)
+    toggleSignup: ->
+      if @get('signingUp')
+        @set('signingUp', false)
+      else
+        @set('signingUp', true)

@@ -1,0 +1,1 @@
+# FunSchedular.UsersShowRoute = Ember.Route.extend()

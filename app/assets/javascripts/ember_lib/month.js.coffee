@@ -4,32 +4,83 @@ FunSchedular.Month = Ember.Object.extend
 
   init: ->
     @set('guideDate', moment(@get('currentMonth'), "YYYY-MM-DD"))
-    @get('weeks')
+    @setUpMonth()
+
+
+  setUpMonth: ->
+    @daysInMonth = @_getDaysInMonth()
+    @allDays = @_addSurroundingDays(@daysInMonth)
+    @_setDays(@allDays)
+    @_orderIntoWeeks()
+
 
   guideDate: (->
     moment()
   ).property()
 
+
   month: (->
     moment(@get('guideDate')).get('month') + 1
   ).property()
 
-  daysInMonth: ( -> 
+
+  addEventsToDays: (->
+    events = @get('allEvents')
+    self = @
+    events.forEach (event) ->
+      key = event.get('date')
+      day = self.get(key)
+      day.addItem(event)
+      self.set(key, day)
+
+  ).observes('allEvents.length')
+
+
+  allEvents: []
+
+
+  ########### INTERFACE ###########
+
+  setEvents: (events) ->
+    @set('allEvents', events)
+    return @
+
+
+  addEvent: (event) ->
+    events = @get('allEvents')
+    events.addObject(event)
+    @set('allEvents', events)
+    return @ 
+
+
+###### utilities to set u 
+
+  _setDays: (allDays) ->
+    self = @
+    keys = []
+    allDays.forEach (day) ->
+      key = moment(day.get('moment')).format('YYYY-MM-DD')
+      keys.push key
+      self.set(key, day)
+
+    @daysKeys = keys
+
+
+  _getDaysInMonth: -> 
     day = @get('guideDate')
     date = moment(day).startOf('month').toDate()
     month = moment(date).get('month')
     days = []
     while date.getMonth() == month # if that date is in the right month
-      day = FunSchedular.Day.create({ date: date })
+      day = FunSchedular.Day.create({ date: date, uniqueBy: 'id', sortProperties: 'date' })
       day.set('inMonth', true)
       days.push day
       date.setDate(date.getDate() + 1) # then advance the loop
-
     days
-  ).property('guideDate')
 
-  monthWithSurrounding: (->
-    daysInMonth = @get('daysInMonth')
+
+
+  _addSurroundingDays: (daysInMonth) ->
 
     # these could be more emperically defined
     firstDay = daysInMonth[0].get('moment')
@@ -48,56 +99,35 @@ FunSchedular.Month = Ember.Object.extend
       newDay = FunSchedular.Day.create({ date: newMom })
       newDay.set('month', 'next')
       daysInMonth.push newDay if moment(newMom).get('week') == moment(firstDay).get('week')
+
     daysInMonth
-  ).property('daysInMonth')
 
 
-  # this could either be used when the object is created or after a day object recieves an associated events after initial payload
-  weeks: (->
-    fullMonth = @get('monthWithSurrounding')
+
+  _orderIntoWeeks: ->
+    allDays = @_getAllDays()
+
     callback = (acc, day) ->
       week = moment(day.get('moment')).get('week')
+      console.log week
       if acc[week] 
         acc[week].push day
       else
         acc[week] = [day]
       acc
 
-    _weeks = fullMonth.reduce callback, {}
+    _weeks = allDays.reduce callback, {}
     weeks = []
     for key of _weeks
       iterator = (day) -> 
         day.moment.unix()
       
       weeks.push _.sortBy(_weeks[key], iterator)
-    weeks
-  ).property('fullMonth')
-
-  addEventsToDays: (->
-    console.log "CALLED"
-    events = @get('allEvents')
-    daysWithEvents = @get('daysInMonth').map (day) ->
-      events.forEach (e) -> 
-        day.pushObject e if moment(e.get('moment')).format('YYYY-MM-DD') == day.get('moment').format('YYYY-MM-DD') # add event to day Array if it is on that day
-      day
-
-    @set('daysInMonth', daysWithEvents)
-  ).observes('allEvents.length')
-
-  allEvents: []
+    @set('weeks', weeks)
 
 
-  ########### INTERFACE ###########
-
-  setEvents: (events) ->
-    @set('allEvents', events)
-    return @ #return self to chaing methods
-
-  addEvent: (event) ->
-    newEvents = @get('allEvents')
-    newEvents.pushObject(event)
-    console.log "ADDED"
-    @set('allEvents', newEvents)
-    return @ #return self to chaing methods
-
+  _getAllDays: ->
+    self = @
+    @daysKeys.map (key) -> 
+      self.get(key)
 

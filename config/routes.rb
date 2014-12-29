@@ -1,7 +1,9 @@
 FunSchedular::Application.routes.draw do
 
-  devise_for :users, :controllers => {sessions: 'sessions'}
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
   resources :events
+  resources :users
+  resources :relationships
 
   root :to => 'assets#index'
   # root :to => 'users#show'

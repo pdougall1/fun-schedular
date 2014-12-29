@@ -5,6 +5,45 @@ FunSchedular.EventsCreateController = Ember.ObjectController.extend
 
   eventDate: null
 
+  beginTime: (->
+    moment()
+  ).property()
+
+  allCompleted: (->
+    !!@get('name') &&
+    !!@get('beginTime') &&
+    !!@get('endTime') &&
+    !!@get('latitude') &&
+    !!@get('longitude')
+  ).property('name', 'beginTime', 'endTime', 'latitude', 'longitude')
+
+  buttons: (->
+   [
+    {
+      label: 'Name'
+      action: 'showBottom'
+      completed: !!@get('name')
+    }, {
+      label: 'Beginning'
+      action: 'showFront'
+      completed: !!@get('beginTime')
+    }, {
+      label: 'Ending'
+      action: 'showTop'
+      completed: !!@get('endTime')
+    }, {
+      label: 'Location'
+      action: 'showBack'
+      completed: !!@get('latitude') && !!@get('longitude')
+    }, {
+      label: 'Submit'
+      action: 'createEvent'
+      completed: @get('allCompleted')
+    }
+  ]
+  ).property('name', 'beginTime', 'endTime', 'latitude', 'longitude', 'allCompleted')
+
+
 
 #   editingDate: (->
 #     !@get('time')

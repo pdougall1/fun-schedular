@@ -1,19 +1,41 @@
-FunSchedular.TimeSelectorComponent = Ember.Select.extend
+FunSchedular.TimeSelectorComponent = Ember.Component.extend
 
-  content: (->
-    date = moment(@get('date')) || moment()
-    date.set('hour', 0)
-    date.set('minute', 0)
-    date.set('second', 0)
-    date.set('millisecond', 0)
-    content = [1..48].map (i) ->
-      date.add(30, 'minute')
-      { date: moment(date).toDate(), time: moment(date).format('h:mm A') }
-    content
+  value: (->
+    moment()
   ).property()
 
-  optionValuePath: "content.date"
-  optionLabelPath: "content.time"
+  ampm: (->
+    moment(@get('value')).format('A')
+  ).property()
+
+  hour: (->
+    parseInt(moment(@get('value')).format('hh'))
+  ).property()
+
+  minutes: (->
+    moment(@get('value')).minutes()
+  ).property()
+
+  resetValue: (->
+    mom = moment(@get('value'))
+    mom.hour(@get('hour'))
+    mom.minutes(@get('minutes'))
+    @set('value', mom)
+  ).observes('hour', 'minutes')
 
   change:->
     @get('controller').send("changedTime", @get('value'), @get('type'))
+
+  actions: 
+    flipAmpm: ->
+      if @get('ampm') == 'AM'
+        @set('ampm', 'PM')
+      else
+        @set('ampm', 'AM')
+
+    increaseHour: ->
+      @set('hour', @get('hour') + 1)
+
+    decreaseHour: ->
+      @set('hour', @get('hour') - 1)
+

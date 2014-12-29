@@ -2,6 +2,7 @@ FunSchedular.GoogleMapComponent = Ember.Component.extend
   classNames: ['google-map']
   
   latLng: (->
+    console.log("working")
     new google.maps.LatLng(@get('latitude'), @get('longitude'))
   ).property('latitude', 'longitude')
 
@@ -26,9 +27,11 @@ FunSchedular.GoogleMapComponent = Ember.Component.extend
   ).property('latitude', 'longitude')
 
   drawMap: (->
+    console.log('HERE 2')
     @get('marker')
   ).observes('latitude', 'longitude', 'latLng')
 
   didInsertElement: ->
-    @get('drawMap')
+    if @get('latitude') && @get('longitude')
+      @drawMap()
 

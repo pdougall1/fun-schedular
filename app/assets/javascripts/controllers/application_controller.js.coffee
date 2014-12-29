@@ -1,6 +1,12 @@
 FunSchedular.ApplicationController = Ember.Controller.extend Ember.Evented,
 
-  password: null
-  email: null
-  inApp: true
-  errors: 'dougs'
+  fields: 
+  	first_name: ''
+  	last_name: ''
+  	email: ''
+  	password: ''
+  	password_confirmation: ''
+
+  userLoggedIn: (->
+  	!!@get('currentUser')
+  ).property('currentUser.isTrialUser')

@@ -1,3 +1,10 @@
+to start elasticsearch
+ elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
+
+
+elasticsearch client is on http://localhost:9200/
+
+
 == README
 
 This README would normally document whatever steps are necessary to get the
