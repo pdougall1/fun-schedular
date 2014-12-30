@@ -15,6 +15,7 @@ gem 'foundation-rails'
 gem 'gon'
 gem 'devise'
 gem 'faker'
+gem 'redis'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
