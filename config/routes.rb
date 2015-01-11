@@ -3,6 +3,7 @@ FunSchedular::Application.routes.draw do
   devise_for :users, :controllers => {sessions: 'sessions', registrations: 'registrations'}
   resources :events
   resources :users
+  resources :friends
   resources :relationships
 
   scope module: 'login' do

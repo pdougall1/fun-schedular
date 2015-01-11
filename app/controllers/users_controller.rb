@@ -1,4 +1,4 @@
-class UsersController < ActionController::Base
+class UsersController < ApplicationController
 
 	def show
 		user = params[:id] ? User.find(params[:id]) : current_user

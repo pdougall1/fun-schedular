@@ -1,7 +1,7 @@
 {{input value=searchText}}
 <ul>
 	{{#each term in results}}
-		<li>{{term}}</li>
+		<a><li {{action "addFriend" term.id}}>{{term.name}}</li></a>
 	{{/each}}
 </ul>
 

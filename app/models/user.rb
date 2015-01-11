@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
   	result
   end
 
+  def as_friend_json
+    {friend: attributes}
+  end
+
   def self.create_trial!
     params = { 
       first_name: "Trial", 
