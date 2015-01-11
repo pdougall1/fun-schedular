@@ -9,6 +9,7 @@
     <!-- Right Nav Section -->
     <ul class="right">
       {{#if userLoggedIn}}
+        <li>{{facebook-login user=currentUser}}</li>
         <li {{action 'visitUser' currentUser}} class='error'>{{currentUser.firstName}}</li>
         <li><a {{action 'logout'}}>Log Out</a></li>
       {{else}}

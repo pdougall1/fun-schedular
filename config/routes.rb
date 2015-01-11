@@ -5,6 +5,10 @@ FunSchedular::Application.routes.draw do
   resources :users
   resources :relationships
 
+  scope module: 'login' do
+    resources :facebook
+  end
+
   root :to => 'assets#index'
   # root :to => 'users#show'
   get "assets/index"
