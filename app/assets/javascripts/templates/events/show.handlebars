@@ -1,20 +1,22 @@
 <div id='show-event'>
-	<h3>{{name}}</h3>
 
-	{{google-map latitude=latitude longitude=longitude}}
-	{{date}}
-	{{beginTime}}	
-	{{endTime}}
-	<div>LOC: {{location}}</div>
-	<div>DES: {{description}}</div>
-
-	{{friend-search}}
-
-	<ul>
-		{{#each friend in friends}}
-			<li>{{friend.name}}</li>
-		{{/each}}
-	</ul>
+	<div class='row'>
+		<div class='large-8 columns'>
+			{{#each friend in friends}}
+				<ul class='freinds-list'>
+					<li>
+						{{friend.fullName}}
+						<button>dougs</button>
+					</li>
+				</ul>
+			{{/each}}
+		</div>
+		<div class='large-4 columns'>
+			<h3>{{name}}</h3>
+			{{google-map latitude=latitude longitude=longitude}}
+			{{friend-search action="addFriend"}}
+		</div>
+	</div>
 
 
 
